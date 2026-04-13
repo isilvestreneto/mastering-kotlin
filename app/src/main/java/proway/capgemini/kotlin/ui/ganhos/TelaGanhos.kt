@@ -34,9 +34,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import proway.capgemini.kotlin.model.Categoria
 import proway.capgemini.kotlin.model.Ganho
-import java.text.NumberFormat
 import java.time.LocalDate
-import java.util.Locale
+import proway.capgemini.kotlin.ui.util.formatarMoeda
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,7 +90,7 @@ fun TelaGanhos(
 
 @Composable
 private fun GanhoCard(ganho: Ganho) {
-    val valorFormatado = NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(ganho.valor)
+    val valorFormatado = formatarMoeda(ganho.valor)
     Card(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier

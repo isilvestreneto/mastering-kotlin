@@ -32,8 +32,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import proway.capgemini.kotlin.model.Sonho
-import java.text.NumberFormat
-import java.util.Locale
+import proway.capgemini.kotlin.ui.util.formatarMoeda
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,7 +88,6 @@ fun TelaSonhos(
 
 @Composable
 private fun SonhoCard(sonho: Sonho, saldo: Float) {
-    val formato = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
     // Progresso = saldo atual / valor alvo, limitado entre 0 e 1
     val progresso = (saldo / sonho.valorAlvo).coerceIn(0f, 1f)
     val falta = (sonho.valorAlvo - saldo).coerceAtLeast(0f)
@@ -107,7 +105,7 @@ private fun SonhoCard(sonho: Sonho, saldo: Float) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(sonho.nome, style = MaterialTheme.typography.bodyLarge)
-                Text(formato.format(sonho.valorAlvo), style = MaterialTheme.typography.bodyLarge)
+                Text(formatarMoeda(sonho.valorAlvo), style = MaterialTheme.typography.bodyLarge)
             }
 
             LinearProgressIndicator(
@@ -120,12 +118,12 @@ private fun SonhoCard(sonho: Sonho, saldo: Float) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    "Saldo atual: ${formato.format(saldo)}",
+                    "Saldo atual: ${formatarMoeda(saldo)}",
                     style = MaterialTheme.typography.labelSmall
                 )
                 if (falta > 0f) {
                     Text(
-                        "Faltam: ${formato.format(falta)}",
+                        "Faltam: ${formatarMoeda(falta)}",
                         style = MaterialTheme.typography.labelSmall
                     )
                 } else {

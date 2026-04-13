@@ -23,12 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import java.text.NumberFormat
-import java.util.Locale
+import proway.capgemini.kotlin.ui.util.formatarMoeda
+import proway.capgemini.kotlin.ui.util.formatarMoedaAbreviado
 
 @Composable
 fun TelaInicio(saldo: Float, ganhos: Float, gastos: Float) {
-    val saldoFormatado = formatarMoeda(saldo)
+    val saldoFormatado = formatarMoedaAbreviado(saldo)
 
     val corFundo = if (saldo > 0) Color(0xFF4A6FA5)
     else if (saldo < 0) Color(0xFFE8C84A)
@@ -115,10 +115,3 @@ fun TelaInicio(saldo: Float, ganhos: Float, gastos: Float) {
 
 }
 
-private fun formatarMoeda(saldo: Float): String {
-    return when {
-        saldo >= 1_000_000f -> "R$ %.1fM".format(saldo / 1_000_000f)
-        saldo >= 1_000f -> "R$ %.1fk".format(saldo / 1_000f)
-        else -> NumberFormat.getCurrencyInstance(Locale("pt", "BR")).format(saldo)
-    }
-}
