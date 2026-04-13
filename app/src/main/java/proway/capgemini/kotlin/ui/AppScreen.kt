@@ -4,17 +4,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.TrendingDown
 import androidx.compose.material.icons.automirrored.filled.TrendingUp
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -78,8 +83,19 @@ fun AppScreen() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    // 3. Montar o Scafoold com Bottomnavigationbar e NavHost
+    var showSheet by remember { mutableStateOf(false) }
+    // Fecha o sheet ao navegar entre telas
+    LaunchedEffect(currentRoute) { showSheet = false }
+
+    // 3. Montar o Scaffold com BottomNavigationBar, FAB e NavHost
     Scaffold(
+        floatingActionButton = {
+            if (currentRoute != Rotas.INICIO) {
+                FloatingActionButton(onClick = { showSheet = true }) {
+                    Icon(Icons.Default.Add, contentDescription = "Adicionar")
+                }
+            }
+        },
         bottomBar = {
             NavigationBar(
 
@@ -126,16 +142,30 @@ fun AppScreen() {
         ) {
             composable(Rotas.INICIO) { TelaInicio(saldo, ganhosTotais, gastosTotais) }
             composable(Rotas.GANHOS) {
-                TelaGanhos(ganhos, { ganho ->
-                    ganhos.add(ganho)
-                })
+                TelaGanhos(
+                    ganhos = ganhos,
+                    showSheet = showSheet,
+                    onDismissSheet = { showSheet = false },
+                    onAdd = { ganhos.add(it) }
+                )
             }
             composable(Rotas.GASTOS) {
-                TelaGastos(gastos, { gasto ->
-                    gastos.add(gasto)
-                })
+                TelaGastos(
+                    gastos = gastos,
+                    showSheet = showSheet,
+                    onDismissSheet = { showSheet = false },
+                    onAdd = { gastos.add(it) }
+                )
             }
-            composable(Rotas.SONHOS) { TelaSonhos(sonhos, saldo) { sonhos.add(it) } }
+            composable(Rotas.SONHOS) {
+                TelaSonhos(
+                    sonhos = sonhos,
+                    saldo = saldo,
+                    showSheet = showSheet,
+                    onDismissSheet = { showSheet = false },
+                    onAdd = { sonhos.add(it) }
+                )
+            }
         }
     }
 

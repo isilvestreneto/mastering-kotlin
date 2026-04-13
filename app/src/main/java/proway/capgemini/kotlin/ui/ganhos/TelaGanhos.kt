@@ -11,18 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -44,56 +40,49 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaGanhos(ganhos: List<Ganho>, onAdd: (Ganho) -> Unit) {
+fun TelaGanhos(
+    ganhos: List<Ganho>,
+    showSheet: Boolean,
+    onDismissSheet: () -> Unit,
+    onAdd: (Ganho) -> Unit
+) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
-    var showSheet by remember { mutableStateOf(false) }
 
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = { showSheet = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Adicionar ganho")
-            }
+    if (ganhos.isEmpty()) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Sem registros.", style = MaterialTheme.typography.bodyLarge)
+            Text("Toque em + para adicionar.", style = MaterialTheme.typography.bodySmall)
         }
-    ) { innerPadding ->
-        if (ganhos.isEmpty()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text("Sem registros.", style = MaterialTheme.typography.bodyLarge)
-                Text("Toque em + para adicionar.", style = MaterialTheme.typography.bodySmall)
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(ganhos) { ganho ->
-                    GanhoCard(ganho)
-                }
+    } else {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(ganhos) { ganho ->
+                GanhoCard(ganho)
             }
         }
     }
 
     if (showSheet) {
         ModalBottomSheet(
-            onDismissRequest = { showSheet = false },
+            onDismissRequest = onDismissSheet,
             sheetState = sheetState
         ) {
             FormularioGanho(
                 onConfirm = { ganho ->
                     onAdd(ganho)
-                    scope.launch { sheetState.hide() }.invokeOnCompletion { showSheet = false }
+                    scope.launch { sheetState.hide() }.invokeOnCompletion { onDismissSheet() }
                 },
                 onCancel = {
-                    scope.launch { sheetState.hide() }.invokeOnCompletion { showSheet = false }
+                    scope.launch { sheetState.hide() }.invokeOnCompletion { onDismissSheet() }
                 }
             )
         }
