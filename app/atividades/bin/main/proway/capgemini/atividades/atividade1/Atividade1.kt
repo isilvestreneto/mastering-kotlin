@@ -1,4 +1,4 @@
-package proway.capgemini.atividades
+package proway.capgemini.atividades.atividade1
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -282,33 +282,3 @@ data class Ave(override val nome: String, override val dataNascimento: LocalDate
 enum class Tipo {
     CANINO, FELINO, ROEDOR, AVE
 }
-
-
-/**
- * *Projeto - Introdução ao Desenvolvimento com Kotlin*
- *
- * Criar um projeto contendo as seguintes características:
- *
- * 1. Deverá ter uma classe de modelo;
- *
- * 2. Crie uma estrutura de lista para gerenciar os objetos oriundos da classe;
- *
- * 3. Deverá ter as seguintes funcionalidades:
- * A) Cadastrar;
- * B) Listar;
- * C) Pesquisar;
- * D) Alterar;
- * E) Remover;
- * F) Finalizar.
- *
- * 4. Deverá ter o uso de pelo menos um Null Safety;
- *
- * 5. Implemente pelo menos um Elvis Operator;
- *
- * 6. Estruture utilizando os conceitos de POO;
- *
- * 7. Realize validações para garantir registros coesos;
- *
- * 8. Para criar essa interação com o usuário, utilize a classe Scanner.
- *
- */
