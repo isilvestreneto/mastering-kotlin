@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import proway.capgemini.kotlin.model.Categoria
 import proway.capgemini.kotlin.model.Ganho
@@ -73,6 +74,9 @@ fun AppScreen() {
     }
 
     val navController: NavHostController = rememberNavController()
+    // currentBackStackEntryAsState() expõe a rota ativa como State — recompõe o bottomBar automaticamente
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
     // 3. Montar o Scafoold com Bottomnavigationbar e NavHost
     Scaffold(
@@ -82,13 +86,13 @@ fun AppScreen() {
             ) {
                 // Link - Início
                 NavigationBarItem(
-                    selected = true,
+                    selected = currentRoute == Rotas.INICIO,
                     onClick = { navController.navigate(Rotas.INICIO) },
                     icon = { Icon(Icons.Default.Home, contentDescription = null) })
 
                 // Link - Ganhos
                 NavigationBarItem(
-                    selected = false,
+                    selected = currentRoute == Rotas.GANHOS,
                     onClick = { navController.navigate(Rotas.GANHOS) },
                     icon = {
                         Icon(
@@ -99,7 +103,7 @@ fun AppScreen() {
 
                 // Link - Gastos
                 NavigationBarItem(
-                    selected = false,
+                    selected = currentRoute == Rotas.GASTOS,
                     onClick = { navController.navigate(Rotas.GASTOS) },
                     icon = {
                         Icon(
@@ -109,7 +113,7 @@ fun AppScreen() {
 
                 // Link - Sonhos
                 NavigationBarItem(
-                    selected = false,
+                    selected = currentRoute == Rotas.SONHOS,
                     onClick = { navController.navigate(Rotas.SONHOS) },
                     icon = { Icon(Icons.Default.Cloud, contentDescription = null) })
             }
