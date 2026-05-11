@@ -1,4 +1,4 @@
-package proway.capgemini.kotlin.ui
+package proway.capgemini.kotlin.atividade1.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -26,15 +26,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import proway.capgemini.kotlin.model.Categoria
-import proway.capgemini.kotlin.model.Ganho
-import proway.capgemini.kotlin.model.Gasto
-import proway.capgemini.kotlin.model.Sonho
-import proway.capgemini.kotlin.ui.constantes.Rotas
-import proway.capgemini.kotlin.ui.ganhos.TelaGanhos
-import proway.capgemini.kotlin.ui.gastos.TelaGastos
-import proway.capgemini.kotlin.ui.home.TelaInicio
-import proway.capgemini.kotlin.ui.sonhos.TelaSonhos
+import proway.capgemini.kotlin.atividade1.model.Categoria
+import proway.capgemini.kotlin.atividade1.model.Ganho
+import proway.capgemini.kotlin.atividade1.model.Gasto
+import proway.capgemini.kotlin.atividade1.model.Sonho
+import proway.capgemini.kotlin.atividade1.ui.constantes.Rotas
+import proway.capgemini.kotlin.atividade1.ui.ganhos.TelaGanhos
+import proway.capgemini.kotlin.atividade1.ui.gastos.TelaGastos
+import proway.capgemini.kotlin.atividade1.ui.home.TelaInicio
+import proway.capgemini.kotlin.atividade1.ui.sonhos.TelaSonhos
 import java.time.LocalDate
 
 @Composable

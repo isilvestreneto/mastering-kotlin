@@ -1,4 +1,4 @@
-package proway.capgemini.kotlin.model
+package proway.capgemini.kotlin.atividade1.model
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Category

@@ -1,4 +1,4 @@
-package proway.capgemini.kotlin.ui.util
+package proway.capgemini.kotlin.atividade1.ui.util
 
 import java.text.NumberFormat
 import java.util.Locale

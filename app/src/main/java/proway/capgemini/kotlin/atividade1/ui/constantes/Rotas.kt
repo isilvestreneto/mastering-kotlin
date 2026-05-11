@@ -1,4 +1,4 @@
-package proway.capgemini.kotlin.ui.constantes
+package proway.capgemini.kotlin.atividade1.ui.constantes
 
 object Rotas {
     const val INICIO = "inicio"

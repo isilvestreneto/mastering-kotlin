@@ -1,4 +1,4 @@
-package proway.capgemini.kotlin.ui.sonhos
+package proway.capgemini.kotlin.atividade1.ui.sonhos
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,8 +31,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import proway.capgemini.kotlin.model.Sonho
-import proway.capgemini.kotlin.ui.util.formatarMoeda
+import proway.capgemini.kotlin.atividade1.model.Sonho
+import proway.capgemini.kotlin.atividade1.ui.util.formatarMoeda
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -1,4 +1,4 @@
-package proway.capgemini.kotlin.ui.home
+package proway.capgemini.kotlin.atividade1.ui.home
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -23,8 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import proway.capgemini.kotlin.ui.util.formatarMoeda
-import proway.capgemini.kotlin.ui.util.formatarMoedaAbreviado
+import proway.capgemini.kotlin.atividade1.ui.util.formatarMoeda
+import proway.capgemini.kotlin.atividade1.ui.util.formatarMoedaAbreviado
 
 @Composable
 fun TelaInicio(saldo: Float, ganhos: Float, gastos: Float) {

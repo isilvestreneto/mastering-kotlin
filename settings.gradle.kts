@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "kotlin"
 include(":app")
 include(":app:atividades")
+include(":app:atividade22")

@@ -1,4 +1,4 @@
-package proway.capgemini.kotlin.ui.ganhos
+package proway.capgemini.kotlin.atividade1.ui.gastos
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,23 +32,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import proway.capgemini.kotlin.model.Categoria
-import proway.capgemini.kotlin.model.Ganho
+import proway.capgemini.kotlin.atividade1.model.Categoria
+import proway.capgemini.kotlin.atividade1.model.Gasto
+import proway.capgemini.kotlin.atividade1.ui.util.formatarMoeda
 import java.time.LocalDate
-import proway.capgemini.kotlin.ui.util.formatarMoeda
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaGanhos(
-    ganhos: List<Ganho>,
+fun TelaGastos(
+    gastos: List<Gasto>,
     showSheet: Boolean,
     onDismissSheet: () -> Unit,
-    onAdd: (Ganho) -> Unit
+    onAdd: (Gasto) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
 
-    if (ganhos.isEmpty()) {
+    if (gastos.isEmpty()) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -64,8 +64,8 @@ fun TelaGanhos(
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(ganhos) { ganho ->
-                GanhoCard(ganho)
+            items(gastos) { gasto ->
+                GastoCard(gasto)
             }
         }
     }
@@ -75,9 +75,9 @@ fun TelaGanhos(
             onDismissRequest = onDismissSheet,
             sheetState = sheetState
         ) {
-            FormularioGanho(
-                onConfirm = { ganho ->
-                    onAdd(ganho)
+            FormularioGasto(
+                onConfirm = { gasto ->
+                    onAdd(gasto)
                     scope.launch { sheetState.hide() }.invokeOnCompletion { onDismissSheet() }
                 },
                 onCancel = {
@@ -89,8 +89,8 @@ fun TelaGanhos(
 }
 
 @Composable
-private fun GanhoCard(ganho: Ganho) {
-    val valorFormatado = formatarMoeda(ganho.valor)
+private fun GastoCard(gasto: Gasto) {
+    val valorFormatado = formatarMoeda(gasto.valor)
     Card(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -103,10 +103,10 @@ private fun GanhoCard(ganho: Ganho) {
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                Icon(ganho.categoria.icon, contentDescription = ganho.categoria.name)
+                Icon(gasto.categoria.icon, contentDescription = gasto.categoria.name)
                 Column {
-                    Text(ganho.descricao, style = MaterialTheme.typography.bodyLarge)
-                    Text(ganho.data.toString(), style = MaterialTheme.typography.labelSmall)
+                    Text(gasto.descricao, style = MaterialTheme.typography.bodyLarge)
+                    Text(gasto.data.toString(), style = MaterialTheme.typography.labelSmall)
                 }
             }
             Text(valorFormatado, style = MaterialTheme.typography.bodyLarge)
@@ -115,8 +115,8 @@ private fun GanhoCard(ganho: Ganho) {
 }
 
 @Composable
-private fun FormularioGanho(
-    onConfirm: (Ganho) -> Unit,
+private fun FormularioGasto(
+    onConfirm: (Gasto) -> Unit,
     onCancel: () -> Unit
 ) {
     var descricao by remember { mutableStateOf("") }
@@ -131,7 +131,7 @@ private fun FormularioGanho(
             .padding(bottom = 32.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Novo Ganho", style = MaterialTheme.typography.titleMedium)
+        Text("Novo Gasto", style = MaterialTheme.typography.titleMedium)
 
         OutlinedTextField(
             value = descricao,
@@ -156,7 +156,6 @@ private fun FormularioGanho(
         )
 
         Text("Categoria", style = MaterialTheme.typography.labelLarge)
-        // RadioButton por ser enum pequeno (4 opções) — mais legível que Dropdown em modal
         Column {
             Categoria.entries.forEach { categoria ->
                 Row(
@@ -197,7 +196,7 @@ private fun FormularioGanho(
                         return@Button
                     }
                     onConfirm(
-                        Ganho(
+                        Gasto(
                             descricao = descricao,
                             valor = valor,
                             data = LocalDate.now(),
